@@ -24,3 +24,15 @@ def corpo_transacao():
         'pais': pais,
         'hora': hora
     }
+
+print("🟢 Enviando transações... (Pressione Ctrl+C para parar)")
+try:
+    while True:
+        transacao = corpo_transacao()
+        producer.send('transacoes', value=transacao)
+        print(f"Enviada: {transacao}")
+        time.sleep(3) 
+except KeyboardInterrupt:
+    print("\n🛑 Encerrando produtor.")
+finally:
+    producer.close()
